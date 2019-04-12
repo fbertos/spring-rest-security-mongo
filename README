@@ -1,0 +1,80 @@
+
+
+curl -X POST \
+  http://localhost:8085/auth \
+  -F username=admin \
+  -F password=admin1234
+
+
+curl -X GET \
+  http://localhost:8085/users \
+  -H 'Authorization: Bearer afd9dce1-a24d-4606-ae52-08779ebbe4ae'
+
+curl -X GET \
+  http://localhost:8085/users/1 \
+  -H 'Authorization: Bearer afd9dce1-a24d-4606-ae52-08779ebbe4ae'
+  
+User Password Encode (class Encoders method userPasswordEncoder) 
+  new BCryptPasswordEncoder(8).encode("admin1234")
+  
+  
+admin1234 => $2a$08$.wdsqTvMznn76z8tq1J/gep7uqKd.bpI6gqJn9zTlRAeAWQucuX4q
+
+  
+update USER_ set PASSWORD = '$2a$08$.wdsqTvMznn76z8tq1J/gep7uqKd.bpI6gqJn9zTlRAeAWQucuX4q' where ID = 1;
+
+user collection
+{
+    "_id" : ObjectId("5caf54f86f5b5d22dcdae2b7"),
+    "username" : "admin",
+    "password" : "$2a$08$.wdsqTvMznn76z8tq1J/gep7uqKd.bpI6gqJn9zTlRAeAWQucuX4q",
+    "accountExpired" : false,
+    "accountLocked" : false,
+    "credentialsExpired" : false,
+    "enabled" : true,
+    "authorities" : [ 
+        {
+            "name" : "USER_READ"
+        }
+    ],
+    "_class" : "org.fbertos.persistence.model.User"
+}
+
+ACL collection
+{
+    "_id" : "a285005a-a892-409a-be86-59877142aa17",
+    "_class" : "org.springframework.security.acls.domain.MongoAcl",
+    "className" : "org.fbertos.persistence.model.User",
+    "instanceId" : ObjectId("5caf54f86f5b5d22dcdae2b7"),
+    "owner" : {
+        "name" : "admin",
+        "isPrincipal" : true
+    },
+    "inheritPermissions" : true,
+    "permissions" : [ 
+        {
+            "_id" : "dbf4dcb0-70f4-48a5-92b0-d4c782af7498",
+            "sid" : {
+                "name" : "admin",
+                "isPrincipal" : true
+            },
+            "permission" : 1,
+            "granting" : true,
+            "auditFailure" : false,
+            "auditSuccess" : false,
+            "position" : 1
+        }, 
+        {
+            "_id" : "dbf4dcb0-70f4-48a5-92b0-d4c782af7492",
+            "sid" : {
+                "name" : "admin",
+                "isPrincipal" : true
+            },
+            "permission" : 5,
+            "granting" : true,
+            "auditFailure" : false,
+            "auditSuccess" : false,
+            "position" : 2
+        }
+    ]
+}

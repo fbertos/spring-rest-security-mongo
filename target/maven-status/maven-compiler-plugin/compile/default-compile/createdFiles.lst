@@ -1,0 +1,16 @@
+org\fbertos\persistence\controller\AuthController.class
+org\fbertos\persistence\dao\UserRepository.class
+org\fbertos\persistence\service\UserServiceImpl.class
+org\fbertos\authorization\config\Encoders.class
+org\fbertos\persistence\model\Authority.class
+org\fbertos\persistence\service\UserService.class
+org\fbertos\authorization\config\JwtConfigurer.class
+org\fbertos\persistence\controller\UserController.class
+org\fbertos\authorization\config\JwtTokenProvider.class
+org\fbertos\authorization\config\InvalidJwtAuthenticationException.class
+org\fbertos\persistence\controller\AuthInfo.class
+org\fbertos\persistence\search\Filter.class
+org\fbertos\authorization\config\JwtTokenFilter.class
+org\fbertos\persistence\ApplicationRestService.class
+org\fbertos\persistence\model\User.class
+org\fbertos\authorization\config\ServerSecurityConfig.class
