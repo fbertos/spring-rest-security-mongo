@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.env.Environment;
+import org.springframework.data.authentication.UserCredentials;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler;
@@ -33,24 +35,22 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import com.mongodb.MongoClient;
 
 @Configuration
-@PropertySource(value="application.properties")
 @EnableMongoRepositories(basePackageClasses = {AclRepository.class, UserRepository.class })
 public class ACLContext {
 	@Autowired
+    private Environment environment;
+	
+	@Autowired
 	private AclRepository aclRepository;
-	
-	@Value("${spring.data.mongodb.host}")
-	private String host;
-	
-	@Value("${spring.data.mongodb.port}")
-	private String port;
-	
-	@Value("${spring.data.mongodb.database}")
-	private String db;
 	
 	@Bean
     public MongoTemplate mongoTemplate() throws UnknownHostException
     {
+		String host = environment.getProperty("spring.data.mongodb.host");
+		String port = environment.getProperty("spring.data.mongodb.port");
+		String db = environment.getProperty("spring.data.mongodb.database");
+		String user = environment.getProperty("spring.data.mongodb.username");
+		String pwd = environment.getProperty("spring.data.mongodb.password");
         MongoClient mongoClient = new MongoClient(host, new Integer(port));
         return new MongoTemplate(mongoClient, db);
     }
@@ -102,11 +102,6 @@ public class ACLContext {
         expressionHandler.setPermissionCacheOptimizer(new AclPermissionCacheOptimizer(aclService()));
         return expressionHandler;
     }
-    
-    @Bean
-    static PropertySourcesPlaceholderConfigurer propertyPlaceHolderConfigurer() {
-        return new PropertySourcesPlaceholderConfigurer();
-    }    
 }
 
 

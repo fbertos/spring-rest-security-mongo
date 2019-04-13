@@ -12,7 +12,6 @@ C:\Users\fbertos\workspace\spring-rest-security-mongo\src\main\java\org\springfr
 C:\Users\fbertos\workspace\spring-rest-security-mongo\src\main\java\org\fbertos\authorization\config\Encoders.java
 C:\Users\fbertos\workspace\spring-rest-security-mongo\src\main\java\org\springframework\security\access\expression\method\DefaultMethodSecurityExpressionHandler.java
 C:\Users\fbertos\workspace\spring-rest-security-mongo\src\main\java\org\fbertos\authorization\config\ACLContext.java
-C:\Users\fbertos\workspace\spring-rest-security-mongo\src\main\java\org\fbertos\authorization\config\MongoConfig.java
 C:\Users\fbertos\workspace\spring-rest-security-mongo\src\main\java\org\fbertos\persistence\model\User.java
 C:\Users\fbertos\workspace\spring-rest-security-mongo\src\main\java\org\fbertos\authorization\config\ServerSecurityConfig.java
 C:\Users\fbertos\workspace\spring-rest-security-mongo\src\main\java\org\fbertos\authorization\config\InvalidJwtAuthenticationException.java
