@@ -1,11 +1,15 @@
 package org.fbertos.persistence.service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.fbertos.persistence.dao.UserRepository;
 import org.fbertos.persistence.model.User;
 import org.fbertos.persistence.search.Filter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,12 +34,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	}
 
     //@PreAuthorize("hasAuthority('USER_READ')")
-    @PostFilter("hasPermission(filterObject, 5)")
+    @PostFilter("filterObject.username == authentication.name or hasPermission(filterObject, 3)")
 	public List<User> find(Filter filter) {
-		return userRepository.findAll();
-		//return userRepository.findAll(spec, page).getContent();
+    	Pageable page = PageRequest.of(0, 50);
+    	List<User> list_before = userRepository.findAll(page).getContent();
+    	ArrayList<User> list_after = new ArrayList<User>(list_before);
+		return list_after;
 	}
-	
+
+    @PostFilter("filterObject.username == authentication.name or hasPermission(filterObject, 3)")
+	public List<User> find() {
+		return userRepository.findAll();
+	}
+    
     //@PreAuthorize("hasAuthority('USER_UPDATE')")
 	public void update(User user) {
 		userRepository.save(user);

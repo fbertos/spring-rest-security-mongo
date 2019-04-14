@@ -10,6 +10,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends MongoRepository<User, String> {
+	//@Query("{'$or':[ {'type':?0}, {'username':?1} ]}")
+	//@Query(value = "{'username': {$regex : ?0, $options: 'i'}}")
+	//db.user.find({"username": {$regex : /ADM.*/, $options: 'i'}})
 	@Query("{ 'username' : ?0 }")
-	List<User> findByUsername(String usernamename);	
+	List<User> findByUsername(String username);	
 }
