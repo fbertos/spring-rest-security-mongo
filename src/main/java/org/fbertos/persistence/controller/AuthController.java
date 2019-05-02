@@ -1,6 +1,7 @@
 package org.fbertos.persistence.controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +42,8 @@ public class AuthController {
 	 @PostMapping(value="/auth")
 	 public @ResponseBody ResponseEntity<AuthInfo> auth(@RequestParam String username, @RequestParam String password) {
 		 try {
+			 // createTest();
+			 
 			 authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 			 UserDetails user = userService.loadUserByUsername(username);
 			 String token = jwtTokenProvider.createToken(username, new ArrayList());
@@ -53,5 +56,22 @@ public class AuthController {
 		 catch (AuthenticationException e) {
 			 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);			 
 		 }
+	 }
+	 
+	 public void createTest() {
+		 Collection<Authority> authorities = new ArrayList<Authority>();
+		 Authority auth = new Authority();
+		 auth.setAuthority("ROLE_ADMIN");
+		 authorities.add(auth);
+		 
+		 User user = new User();
+		 user.setAccountExpired(false);
+		 user.setAccountLocked(false);
+		 user.setCredentialsExpired(false);
+		 user.setEnabled(true);
+		 user.setUsername("admin");
+		 user.setPassword("admin1234");
+		 user.setAuthorities(authorities);
+		 userService.save(user);
 	 }
 }
